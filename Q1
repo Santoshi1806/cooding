@@ -1,0 +1,26 @@
+import sys
+
+def main():
+    data = sys.stdin.read().split()
+    idx = 0
+    n = int(data[idx]); idx += 1
+    intervals = []
+    for _ in range(n):
+        start = int(data[idx]); idx += 1
+        end = int(data[idx]); idx += 1
+        intervals.append((start, end))
+
+    intervals.sort(key=lambda x: x[0])
+
+    merged = []
+    for start, end in intervals:
+        if merged and start <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+
+    out_lines = [f"{s} {e}" for s, e in merged]
+    print("\n".join(out_lines))
+
+if __name__ == "__main__":
+    main()
